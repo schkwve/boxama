@@ -1,1 +1,2 @@
-include_HEADERS = boxama.h
+include_HEADERS = boxama.h \
+				draw.h

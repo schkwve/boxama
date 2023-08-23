@@ -17,9 +17,12 @@
  *
  */
 
-#include <boxama.h>
+#ifndef __DRAW_H_
+#define __DRAW_H_
 
-int main()
-{
-	return 0;
-}
+#include <SDL2/SDL.h>
+#include <sys/types.h>
+
+void putpixel(SDL_Surface *surface, int x, int y, uint32_t pixel);
+
+#endif /* __DRAW_H_ */

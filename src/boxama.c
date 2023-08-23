@@ -17,9 +17,40 @@
  *
  */
 
-#ifndef __BOXAMA_H_
-#define __BOXAMA_H_
+#include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <signal.h>
 
-void die();
+#include <boxama.h>
+#include <draw.h>
 
-#endif /* __BOXAMA_H_ */
+SDL_Window *g_window;
+
+int main()
+{
+	atexit(die);
+	signal(SIGINT, exit);
+
+	SDL_Init(SDL_INIT_VIDEO);
+
+	g_window = SDL_CreateWindow("Boxama 0.1", SDL_WINDOWPOS_CENTERED,
+								SDL_WINDOWPOS_CENTERED, 1280, 720,
+								SDL_WINDOW_BORDERLESS | SDL_WINDOW_SHOWN);
+
+	SDL_Surface *screen = SDL_GetWindowSurface(g_window);
+	SDL_FillRect(screen, 0, 0);
+
+	SDL_UpdateWindowSurface(g_window);
+
+	SDL_Event e;
+	while (SDL_WaitEvent(&e) && e.type != SDL_QUIT)
+		;
+
+	return 0;
+}
+
+void die()
+{
+	SDL_DestroyWindow(g_window);
+	SDL_Quit();
+}

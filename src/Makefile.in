@@ -98,10 +98,10 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_boxama_OBJECTS = boxama-boxama.$(OBJEXT)
+am_boxama_OBJECTS = boxama-boxama.$(OBJEXT) boxama-draw.$(OBJEXT)
 boxama_OBJECTS = $(am_boxama_OBJECTS)
 boxama_LDADD = $(LDADD)
-boxama_LINK = $(CCLD) $(boxama_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+boxama_LINK = $(CCLD) $(boxama_CFLAGS) $(CFLAGS) $(boxama_LDFLAGS) \
 	$(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -118,7 +118,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/boxama-boxama.Po
+am__depfiles_remade = ./$(DEPDIR)/boxama-boxama.Po \
+	./$(DEPDIR)/boxama-draw.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -251,8 +252,11 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-boxama_SOURCES = boxama.c
+boxama_SOURCES = boxama.c \
+				draw.c
+
 boxama_CFLAGS = -O2 -Wall -Werror -I${abs_top_srcdir}/include
+boxama_LDFLAGS = -lsdl2
 AUTOMAKE_OPTIONS = subdir-objects
 all: all-am
 
@@ -341,6 +345,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boxama-boxama.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/boxama-draw.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -377,6 +382,20 @@ boxama-boxama.obj: boxama.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='boxama.c' object='boxama-boxama.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(boxama_CFLAGS) $(CFLAGS) -c -o boxama-boxama.obj `if test -f 'boxama.c'; then $(CYGPATH_W) 'boxama.c'; else $(CYGPATH_W) '$(srcdir)/boxama.c'; fi`
+
+boxama-draw.o: draw.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(boxama_CFLAGS) $(CFLAGS) -MT boxama-draw.o -MD -MP -MF $(DEPDIR)/boxama-draw.Tpo -c -o boxama-draw.o `test -f 'draw.c' || echo '$(srcdir)/'`draw.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/boxama-draw.Tpo $(DEPDIR)/boxama-draw.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='draw.c' object='boxama-draw.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(boxama_CFLAGS) $(CFLAGS) -c -o boxama-draw.o `test -f 'draw.c' || echo '$(srcdir)/'`draw.c
+
+boxama-draw.obj: draw.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(boxama_CFLAGS) $(CFLAGS) -MT boxama-draw.obj -MD -MP -MF $(DEPDIR)/boxama-draw.Tpo -c -o boxama-draw.obj `if test -f 'draw.c'; then $(CYGPATH_W) 'draw.c'; else $(CYGPATH_W) '$(srcdir)/draw.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/boxama-draw.Tpo $(DEPDIR)/boxama-draw.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='draw.c' object='boxama-draw.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(boxama_CFLAGS) $(CFLAGS) -c -o boxama-draw.obj `if test -f 'draw.c'; then $(CYGPATH_W) 'draw.c'; else $(CYGPATH_W) '$(srcdir)/draw.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -505,6 +524,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/boxama-boxama.Po
+	-rm -f ./$(DEPDIR)/boxama-draw.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -551,6 +571,7 @@ installcheck-am:
 
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/boxama-boxama.Po
+	-rm -f ./$(DEPDIR)/boxama-draw.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
